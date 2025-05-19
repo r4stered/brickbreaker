@@ -1,0 +1,8 @@
+- actually CI integration of build and tests, should also package game
+- auto code formatting
+- cmake formatting
+- more complex project layout if needed
+- asset packing
+- fix cmake presets and vscode debugging stuff
+- docs?
+- data seperate from game layer for better testing
