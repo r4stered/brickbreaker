@@ -49,6 +49,15 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
+FetchContent_Declare(
+  doctest
+  GIT_REPOSITORY https://github.com/doctest/doctest
+  GIT_TAG v2.4.11 # tag, branch or even commit SHA
+)
+FetchContent_MakeAvailable(doctest)
+include("${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake")
+
+
 # Add executable
 add_executable(${PROJECT_NAME} 
   src/main.cpp
@@ -100,21 +109,23 @@ endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE
   raylib
   raylib_cpp
+  doctest::doctest
 )
 
 # Testing
 if(ENABLE_TESTING)
   enable_testing()
-  
-  # Example of how to add a test
-  # add_executable(test_example tests/test_example.cpp)
-  # target_include_directories(test_example PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  # add_test(NAME test_example COMMAND test_example)
-  
-  # You could use a framework like Catch2, Google Test, etc.
-  # Example with Google Test:
-  # find_package(GTest REQUIRED)
-  # target_link_libraries(test_example PRIVATE GTest::gtest GTest::gtest_main)
+
+  # Add executable
+  add_executable(${PROJECT_NAME}_tests 
+    src/test/main.cpp
+  )
+
+  target_link_libraries(${PROJECT_NAME}_tests PRIVATE
+    doctest::doctest
+  )
+
+  doctest_discover_tests(${PROJECT_NAME}_tests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif()
 
 # Install rules
