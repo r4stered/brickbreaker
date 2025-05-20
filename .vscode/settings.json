@@ -1,6 +1,6 @@
 {
-    "clangd.arguments": [
-        "-background-index",
-        "-compile-commands-dir=${workspaceFolder}/build/strict"
-      ],
+  "clangd.arguments": [
+    "-background-index",
+    "-compile-commands-dir=${workspaceFolder}/build/strict"
+  ],
 }
